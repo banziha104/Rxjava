@@ -95,4 +95,47 @@ Callable<String> callable = () -> {
 
 # Subject 클래스
 
-Obser
+Observable을 Hot Obervable로 바꾸어주며 발행자이기도하고 구독자이기도함.
+
+<li> AsyncSubject 클래스 : 발행한 마지막 데이터를 얻어오는 Subject.
+
+```java
+/*발행자로 사용시*/
+public void exampleAsyncSubject(){
+        AsyncSubject<String> subject = AsyncSubject.create();
+        subject.subscribe(data -> {System.out.println("Subscribe #1 =>" + data );});
+        subject.onNext("1");
+        subject.onNext("2");
+        subject.subscribe(data -> {System.out.println("Subscribe #2 =>" + data );});
+        subject.onNext("3");
+        subject.onComplete(); //onCompelete 직전의 데이터가 발행됨.
+    }
+
+/*구독자로 사용시*/
+public void exampleSubscribeSubject(){
+        Float[] temperature = {10.5f, 13.4f, 12.5f};
+        Observable<Float> source = Observable.fromArray(temperature);
+        
+        AsyncSubject<Float> subject = AsyncSubject.create();
+        subject.subscribe(data -> {System.out.println("Sub #1 =>" + data);});
+        
+        source.subscribe(subject) // Subject클래스는 Observable 클래스와 Observer 인터페이스를 구현하기때문에 가능
+    }
+```
+
+<li> BehaviorSubject 클래스 : 구독을 하면 최근 값 혹은 기본값을 넘겨주는 클래스.
+
+```java
+  public void exampleBehavior(){
+        BehaviorSubject<String> subject = BehaviorSubject.createDefault("6"); //BehaviorSubject는 createDefault로 생성
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 6을 먼저 제공
+        subject.onNext("1");
+        subject.onNext("3");
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 최근 값인 3을 한번 받음 발행후에는 default는 없음
+        subject.onNext("5");
+        subject.onComplete();
+    }
+}
+```
+
+<li>
