@@ -1,6 +1,8 @@
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 
+import java.util.concurrent.Callable;
+
 public class ObservableExample {
     public void example1(){
         Observable
@@ -17,5 +19,13 @@ public class ObservableExample {
                    emitter.onComplete();
                 });
         source.subscribe(System.out::println);
+    }
+
+    public void exmapleCallable(){
+        Callable<String> callable = () -> {
+            Thread.sleep(1000);
+            return "Hello World";
+        };
+        Observable.fromCallable(callable).subscribe(System.out::println);
     }
 }
