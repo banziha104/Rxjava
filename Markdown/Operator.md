@@ -27,9 +27,44 @@ public void mapExample(){
     }
 ```
 
+<br>
+
 ---
 
 ### flatMap() 함수
 
 map()함수는 원하는 입력값을 어떤 함수에 넣어서 변환하는 일대일 함수이지만
 flatmap은 결과가 Observable로 나옮
+
+```java
+ public void flatMapExample(){
+        Function<String,Observable<String>> myFunction = data -> Observable.just(data + "입니다");
+
+        String[] ball = {"1","2","3","4"};
+        Observable<String> source = Observable.fromArray(ball).flatMap(myFunction);
+
+        source.subscribe(System.out::println);
+    }
+```
+
+<br>
+
+---
+
+### filter() 함수
+
+원하는 데이터만 걸러내는 역할을 함
+
+```java
+public void exampleFillter(){
+        Integer[] data = {100,201,302,403,504};
+        
+        Observable<Integer> source = Observable.fromArray(data)
+                .filter(number -> number %2 ==0);
+        
+        source.subscribe(System.out::println);
+    }
+```
+
+### reduce() 함수
+
