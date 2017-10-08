@@ -128,7 +128,7 @@ public void exampleSubscribeSubject(){
 ```java
   public void exampleBehavior(){
         BehaviorSubject<String> subject = BehaviorSubject.createDefault("6"); //BehaviorSubject는 createDefault로 생성
-        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 6을 먼저 제공
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 데이터가 없는 상태이므로 6을 먼저 제공
         subject.onNext("1");
         subject.onNext("3");
         subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 최근 값인 3을 한번 받음 발행후에는 default는 없음
@@ -138,4 +138,54 @@ public void exampleSubscribeSubject(){
 }
 ```
 
-<li>
+<li> PublishSubject 클래스 :함수호출하면 값을 발행시키기 시작, 가장 기본적인 클래스
+
+```java
+
+    public void examplePublish(){
+        PublishSubject<String> subject = PublishSubject.create(); 
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 디폴트 값 제공안함
+        subject.onNext("1");
+        subject.onNext("3");
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 최근 값인 3을 한번 받음 발행후에는 default는 없음
+        subject.onNext("5");
+        subject.onComplete();
+    }
+    
+``` 
+
+<li> ReplaySubject 클래스 : 모든 데이터를 모아뒀다가 구독과 동시에 발행.
+
+```java
+public void exampleReply(){
+        ReplaySubject<String> subject = ReplaySubject.create();
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); 
+        subject.onNext("1");
+        subject.onNext("3");
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 구독과 동시에 1,3을 받음
+        subject.onNext("5");
+        subject.onComplete();
+    }
+```
+
+<br>
+
+---
+
+### ConnectableObservable 클래스
+
+subscribe()을 실행해도 아무런 동작이 일어나지 않음. connect 함수를 호출한시점부터
+구독자에게 발행 
+```java
+public void exmapleConnectableObservable(){
+        String[] arr = {"1","3","5"};
+        Observable<String> balls = Observable.interval(100L, TimeUnit.MILLISECONDS)
+                .map(Long::intValue)
+                .map(i -> arr[i])
+                .take(arr.length);
+        ConnectableObservable<String> source = balls.publish(); // ConnectObservable 생성
+        source.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );});
+        source.subscribe(data -> {System.out.println("Subscriber #2 =>" +data );});
+        source.connect();
+        }
+```

@@ -1,9 +1,13 @@
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.subjects.AsyncSubject;
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.ReplaySubject;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 public class ObservableExample {
     public void example1(){
@@ -59,5 +63,37 @@ public class ObservableExample {
         subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 최근 값인 3을 한번 받음 발행후에는 default는 없음
         subject.onNext("5");
         subject.onComplete();
+    }
+
+    public void examplePublish(){
+        PublishSubject<String> subject = PublishSubject.create();
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 디폴트 값 제공안함
+        subject.onNext("1");
+        subject.onNext("3");
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 최근 값인 3을 한번 받음 발행후에는 default는 없음
+        subject.onNext("5");
+        subject.onComplete();
+    }
+
+    public void exampleReply(){
+        ReplaySubject<String> subject = ReplaySubject.create();
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );});
+        subject.onNext("1");
+        subject.onNext("3");
+        subject.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );}); // 구독과 동시에 1,3을 받음
+        subject.onNext("5");
+        subject.onComplete();
+    }
+
+    public void exmapleConnectableObservable(){
+        String[] arr = {"1","3","5"};
+        Observable<String> balls = Observable.interval(100L, TimeUnit.MILLISECONDS)
+                .map(Long::intValue)
+                .map(i -> arr[i])
+                .take(arr.length);
+        ConnectableObservable<String> source = balls.publish(); // ConnectObservable 생성
+        source.subscribe(data -> {System.out.println("Subscriber #1 =>" +data );});
+        source.subscribe(data -> {System.out.println("Subscriber #2 =>" +data );});
+        source.connect();
     }
 }
