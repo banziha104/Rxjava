@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/RxjavaExample.iml" filepath="$PROJECT_DIR$/.idea/modules/RxjavaExample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RxjavaExample_main.iml" filepath="$PROJECT_DIR$/.idea/modules/RxjavaExample_main.iml" group="RxjavaExample" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RxjavaExample_test.iml" filepath="$PROJECT_DIR$/.idea/modules/RxjavaExample_test.iml" group="RxjavaExample" />
     </modules>
   </component>
 </project>
