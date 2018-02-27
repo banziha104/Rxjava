@@ -27,7 +27,7 @@
           <option name="apiVersion" value="1.2" />
           <option name="pluginOptions">
             <array>
-              <option value="plugin:org.jetbrains.kotlin.kapt:output=/Users/iyeongjun/Project/JvPro/Rxjava/build/tmp/kapt/main/wrappers/annotations.main.txt" />
+              <option value="plugin:org.jetbrains.kotlin.kapt:output=/Users/iyeongjun/Project/JvPro/temp/Rxjava/build/tmp/kapt/main/wrappers/annotations.main.txt" />
               <option value="plugin:org.jetbrains.kotlin.kapt:inherited=true" />
             </array>
           </option>
