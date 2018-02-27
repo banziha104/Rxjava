@@ -34,6 +34,10 @@ class RxJavaWithKotlinTest{
 - defer() : 데이터흐름 생성을 구독자가 subscribe() 함수를 호출할때까지 미룰 수 있음.
 - repeat() : 단순히 반복 실행만 함
 
-```kotlin
-String[] bal
-```
+---
+
+# 변환연산자
+
+- concatMap() : flatMap() 과 유사하지만, 들어온 데이터를 순서대로 처리함
+- switchMap() : 순서를 보장하기 위해 기존에 진행 우이던 작업을 바로 중단함. 즉, 마지막에 들어온 값만 처리하고 싶을 때 사용함
+- groupBy() : 단일 Observable을 여러개의 Observable로 이루어진 Observable 그룹을 만듬 
