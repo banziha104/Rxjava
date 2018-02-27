@@ -68,3 +68,11 @@ public void exampleFillter(){
 
 ### reduce() 함수
 
+```kotlin
+fun test(){
+    val balls = arrayOf("1", "3", "5")
+    val source : Maybe<String> = 
+}
+    
+
+```
